@@ -4,7 +4,7 @@ from io import BytesIO
 from backend import draw_family_tree  # Assumes this is your script for generating the family tree
 import tempfile
 import os
-
+#bla bla
 app = Flask(__name__)
 # Enable CORS for the /generate-family-tree endpoint, allowing requests from any origin
 CORS(app, resources={r"/generate-family-tree": {"origins": "*"}})
