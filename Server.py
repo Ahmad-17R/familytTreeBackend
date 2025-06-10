@@ -4,12 +4,15 @@ from io import BytesIO
 from backend import draw_family_tree  # Assumes this is your script for generating the family tree
 import tempfile
 import os
-#bla bla
+
 app = Flask(__name__)
 # Enable CORS for the /generate-family-tree endpoint, allowing requests from any origin
 CORS(app, resources={r"/generate-family-tree": {"origins": "*"}})
 
-
+# Optional: Basic health/home route to avoid 404s
+@app.route("/", methods=["GET"])
+def home():
+    return "🚀 Family Tree Generator API is Live!", 200
 
 @app.route("/generate-family-tree", methods=["POST", "OPTIONS"])
 def generate_family_tree():
@@ -17,7 +20,6 @@ def generate_family_tree():
     if request.method == "OPTIONS":
         return jsonify({"status": "ok"}), 200
 
-    # Handle POST request
     try:
         family_data = request.get_json()
 
@@ -39,7 +41,6 @@ def generate_family_tree():
         os.remove(image_path)
         img_bytes.seek(0)
 
-        # Send the image as a response
         return send_file(
             img_bytes,
             mimetype="image/png",
@@ -48,9 +49,8 @@ def generate_family_tree():
         )
 
     except Exception as e:
-        # Log the error for debugging
         print(f"Error generating family tree: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=False, host="0.0.0.0", port=5000)

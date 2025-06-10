@@ -4,7 +4,7 @@ matplotlib.use('Agg')  # Set the backend to non-interactive
 import matplotlib.pyplot as plt
 
 def draw_family_tree(family_data, output_file="family_tree.png"):
-    print(family_data)
+    # print(family_data)
     tree = {}
     root = None
     spouses = []
