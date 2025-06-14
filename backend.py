@@ -8,6 +8,7 @@ import numpy as np
 matplotlib.use('agg')
 
 def create_family_tree_graph(data):
+    print("🔥 POST /generate-family-tree HIT")
     # Initialize directed graph
     G = nx.DiGraph()
     
