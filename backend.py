@@ -213,7 +213,7 @@ def create_family_tree_graph(data):
     fig, ax = plt.subplots(figsize=(12, 10))
     
     # Draw rounded rectangle nodes
-    node_width = 0.31 # Width in data units (fits "Stedelberto de Carugo")
+    node_width = 0.35 # Increased width for better fit
     node_height = 0.06  # Height in data units (fits 3-line label)
     for node in G.nodes():
         x, y = pos[node]
@@ -239,7 +239,7 @@ def create_family_tree_graph(data):
     print("Debug: Drawing confirmed edges:", confirmed_edges)
     print("Debug: Drawing probable edges:", probable_edges)
     
-    # Draw confirmed edges (solid black)
+    # Draw confirmed edges (solid black, no arrows)
     if confirmed_edges:
         nx.draw_networkx_edges(
             G,
@@ -248,10 +248,10 @@ def create_family_tree_graph(data):
             edge_color='black',
             style='solid',
             width=2.0,
-            arrows=True
+            arrows=False
         )
     
-    # Draw probable edges (dotted black)
+    # Draw probable edges (dotted black, no arrows)
     if probable_edges:
         nx.draw_networkx_edges(
             G,
@@ -260,7 +260,7 @@ def create_family_tree_graph(data):
             edge_color='black',
             style='dotted',
             width=1.5,
-            arrows=True
+            arrows=False
         )
 
     # Draw labels (smaller font for multi-line text)
@@ -272,3 +272,18 @@ def create_family_tree_graph(data):
     # Save as PNG
     plt.savefig("family_tree.png", format="png", dpi=300, bbox_inches='tight')
     plt.close()
+
+data = '''{
+  "Stadelberto de Carugo": "root:Confirmed:890, 927:Carugo, Milano, etc.",
+  "Andrei de loco Calugo": "Stadelberto de Carugo_anchor:Probable:990:Carugo, Monza",
+  "Arnaldo de loco Calugo": "Andrei de loco Calugo_child:Confirmed:990:Carugo, Monza",
+  "Garibaldo de loco Calugo": "Andrei de loco Calugo_child:Confirmed:990:Carugo, Monza",
+  "Giovanni Rossi": "Arnaldo de loco Calugo_anchor:Probable:1200:Lahore",
+  "Ficia de loco Modicia": "Garibaldo de loco Calugo_spouse:Confirmed:990:Carugo, Monza",
+  "Ambroxi de Carugo": "Garibaldo de loco Calugo_anchor:Confirmed:1176:Como",
+  "Aleena Rossi": "Giovanni Rossi_spouse:Probable:1202:lahore",
+  "Tadoni de loco Modicia": "Ficia de loco Modicia_parent:Confirmed:990:Carugo, Monza",
+  "Tomasso War": "Aleena Rossi_parent:Confirmed:1203:lahore"
+}'''
+
+create_family_tree_graph(data)
