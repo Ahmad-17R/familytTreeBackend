@@ -213,7 +213,7 @@ def create_family_tree_graph(data):
     fig, ax = plt.subplots(figsize=(12, 10))
     
     # Draw rounded rectangle nodes
-    node_width = 0.35 # Increased width for better fit
+    node_width = 0.38 # Increased width for better fit
     node_height = 0.06  # Height in data units (fits 3-line label)
     for node in G.nodes():
         x, y = pos[node]
